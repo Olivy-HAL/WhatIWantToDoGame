@@ -69,7 +69,11 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <TargetName>Game</TargetName>
+    <IncludePath>$(ProjectDir)GameFramework\ExternalLibrary\Assimp\assimp\include;$(ProjectDir)GameFramework\ExternalLibrary\DirectXTex\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)GameFramework\ExternalLibrary\Assimp\assimp\lib;$(ProjectDir)GameFramework\ExternalLibrary\DirectXTex\lib\;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -87,9 +91,13 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -123,6 +131,212 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CBullet.cpp" />
+    <ClCompile Include="CEffectActor.cpp" />
+    <ClCompile Include="CEnemy.cpp" />
+    <ClCompile Include="CEnemyGenerator.cpp" />
+    <ClCompile Include="CFighter.cpp" />
+    <ClCompile Include="CMainGameLevel.cpp" />
+    <ClCompile Include="CMainUI.cpp" />
+    <ClCompile Include="CMissile.cpp" />
+    <ClCompile Include="CPause.cpp" />
+    <ClCompile Include="CPauseUI.cpp" />
+    <ClCompile Include="CPointer.cpp" />
+    <ClCompile Include="CSelectActor.cpp" />
+    <ClCompile Include="CSelectFighter.cpp" />
+    <ClCompile Include="CSelectLevel.cpp" />
+    <ClCompile Include="CSkyDome.cpp" />
+    <ClCompile Include="CTitle.cpp" />
+    <ClCompile Include="CTitleActor.cpp" />
+    <ClCompile Include="CTitleOp.cpp" />
+    <ClCompile Include="CTraiActor.cpp" />
+    <ClCompile Include="CTraiLevel.cpp" />
+    <ClCompile Include="EntryPoint.cpp" />
+    <ClCompile Include="GameFramework\Actor\CActor.cpp" />
+    <ClCompile Include="GameFramework\Components\C2DAnimationComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CAABBColliderComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CBillboardComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CBoxMeshComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CCameraComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CColliderComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CDisplay2DComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CLightComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CLineComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CParticleGeneratorComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CPlaneMeshComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CPointLightComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CPrimitiveMeshComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CRenderComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CSphereColliderComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CSphereMeshComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CSpotLightComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CSpringArmComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CSquareDivisionComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CStaticMeshComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CVisionComponent.cpp" />
+    <ClCompile Include="GameFramework\Data\CModelData.cpp" />
+    <ClCompile Include="GameFramework\Data\CModelMeshData.cpp" />
+    <ClCompile Include="GameFramework\Data\CWave.cpp" />
+    <ClCompile Include="GameFramework\ExternalCode\AssimpScene.cpp" />
+    <ClCompile Include="GameFramework\ExternalCode\CDirectXGraphics.cpp" />
+    <ClCompile Include="GameFramework\ExternalCode\CWindow.cpp" />
+    <ClCompile Include="GameFramework\ExternalCode\CWindowCallback.cpp" />
+    <ClCompile Include="GameFramework\ExternalCode\dx11mathutil.cpp" />
+    <ClCompile Include="GameFramework\ExternalCode\Shader.cpp" />
+    <ClCompile Include="GameFramework\ExternalCode\utftosjisconv.cpp" />
+    <ClCompile Include="GameFramework\ExternalLibrary\DirectXTex\include\DDSTextureLoader.cpp" />
+    <ClCompile Include="GameFramework\ExternalLibrary\DirectXTex\include\WICTextureLoader.cpp" />
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui.cpp" />
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_demo.cpp" />
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_draw.cpp" />
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_tables.cpp" />
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="GameFramework\ExternalTools\imgui\myimgui.cpp" />
+    <ClCompile Include="GameFramework\Game\CApplication.cpp" />
+    <ClCompile Include="GameFramework\Game\CGame.cpp" />
+    <ClCompile Include="GameFramework\Level\CLevel.cpp" />
+    <ClCompile Include="GameFramework\Library\LCCollision.cpp" />
+    <ClCompile Include="GameFramework\Library\LCMath.cpp" />
+    <ClCompile Include="GameFramework\Managers\CColliderManager.cpp" />
+    <ClCompile Include="GameFramework\Managers\CDirectXResourceManager.cpp" />
+    <ClCompile Include="GameFramework\Managers\CGameManager.cpp" />
+    <ClCompile Include="GameFramework\Managers\CInputManager.cpp" />
+    <ClCompile Include="GameFramework\Managers\CLightManager.cpp" />
+    <ClCompile Include="GameFramework\Managers\CModelDataManager.cpp" />
+    <ClCompile Include="GameFramework\Managers\CSoundManager.cpp" />
+    <ClCompile Include="GameFramework\Transform\CRotator.cpp" />
+    <ClCompile Include="GameFramework\Transform\CTransform.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CBullet.h" />
+    <ClInclude Include="CEffectActor.h" />
+    <ClInclude Include="CEnemy.h" />
+    <ClInclude Include="CEnemyGenerator.h" />
+    <ClInclude Include="CFighter.h" />
+    <ClInclude Include="CMainGameLevel.h" />
+    <ClInclude Include="CMainUI.h" />
+    <ClInclude Include="CMissile.h" />
+    <ClInclude Include="CPause.h" />
+    <ClInclude Include="CPauseUI.h" />
+    <ClInclude Include="CPointer.h" />
+    <ClInclude Include="CSelectActor.h" />
+    <ClInclude Include="CSelectFighter.h" />
+    <ClInclude Include="CSelectLevel.h" />
+    <ClInclude Include="CSkyDome.h" />
+    <ClInclude Include="CTitle.h" />
+    <ClInclude Include="CTitleActor.h" />
+    <ClInclude Include="CTitleOp.h" />
+    <ClInclude Include="CTraiActor.h" />
+    <ClInclude Include="CTraiLevel.h" />
+    <ClInclude Include="GameFramework\Actor\CActor.h" />
+    <ClInclude Include="GameFramework\Actor\CActorGenerator.h" />
+    <ClInclude Include="GameFramework\Actor\CCameraActor.h" />
+    <ClInclude Include="GameFramework\Actor\CDisplay2DActor.h" />
+    <ClInclude Include="GameFramework\Actor\CFeedActor.h" />
+    <ClInclude Include="GameFramework\Components\C2DAnimationComponent.h" />
+    <ClInclude Include="GameFramework\Components\CAABBColliderComponent.h" />
+    <ClInclude Include="GameFramework\Components\CBillboardComponent.h" />
+    <ClInclude Include="GameFramework\Components\CBoxMeshComponent.h" />
+    <ClInclude Include="GameFramework\Components\CCameraComponent.h" />
+    <ClInclude Include="GameFramework\Components\CColliderComponent.h" />
+    <ClInclude Include="GameFramework\Components\CComponent.h" />
+    <ClInclude Include="GameFramework\Components\CDisplay2DComponent.h" />
+    <ClInclude Include="GameFramework\Components\CLightComponent.h" />
+    <ClInclude Include="GameFramework\Components\CLineComponent.h" />
+    <ClInclude Include="GameFramework\Components\CParticleGeneratorComponent.h" />
+    <ClInclude Include="GameFramework\Components\CPlaneMeshComponent.h" />
+    <ClInclude Include="GameFramework\Components\CPointLightComponent.h" />
+    <ClInclude Include="GameFramework\Components\CPrimitiveMeshComponent.h" />
+    <ClInclude Include="GameFramework\Components\CRenderComponent.h" />
+    <ClInclude Include="GameFramework\Components\CSceneComponent.h" />
+    <ClInclude Include="GameFramework\Components\CSphereColliderComponent.h" />
+    <ClInclude Include="GameFramework\Components\CSphereMeshComponent.h" />
+    <ClInclude Include="GameFramework\Components\CSpotLightComponent.h" />
+    <ClInclude Include="GameFramework\Components\CSpringArmComponent.h" />
+    <ClInclude Include="GameFramework\Components\CSquareDivisionComponent.h" />
+    <ClInclude Include="GameFramework\Components\CStaticMeshComponent.h" />
+    <ClInclude Include="GameFramework\Components\CVisionComponent.h" />
+    <ClInclude Include="GameFramework\Data\CModelData.h" />
+    <ClInclude Include="GameFramework\Data\CModelMeshData.h" />
+    <ClInclude Include="GameFramework\Data\CWave.h" />
+    <ClInclude Include="GameFramework\Data\VertexProto.h" />
+    <ClInclude Include="GameFramework\ExternalCode\AssimpScene.h" />
+    <ClInclude Include="GameFramework\ExternalCode\CDirectInput.h" />
+    <ClInclude Include="GameFramework\ExternalCode\CDirectxGraphics.h" />
+    <ClInclude Include="GameFramework\ExternalCode\CWindow.h" />
+    <ClInclude Include="GameFramework\ExternalCode\CWindowCallback.h" />
+    <ClInclude Include="GameFramework\ExternalCode\dx11mathutil.h" />
+    <ClInclude Include="GameFramework\ExternalCode\DX11Settransform.h" />
+    <ClInclude Include="GameFramework\ExternalCode\Memory.h" />
+    <ClInclude Include="GameFramework\ExternalCode\Shader.h" />
+    <ClInclude Include="GameFramework\ExternalCode\shaderhashmap.h" />
+    <ClInclude Include="GameFramework\ExternalCode\utftosjisconv.h" />
+    <ClInclude Include="GameFramework\ExternalLibrary\DirectXTex\include\DDSTextureLoader.h" />
+    <ClInclude Include="GameFramework\ExternalLibrary\DirectXTex\include\DirectXTex.h" />
+    <ClInclude Include="GameFramework\ExternalLibrary\DirectXTex\include\WICTextureLoader.h" />
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imconfig.h" />
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imgui.h" />
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imgui_internal.h" />
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imstb_rectpack.h" />
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imstb_textedit.h" />
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imstb_truetype.h" />
+    <ClInclude Include="GameFramework\ExternalTools\imgui\myimgui.h" />
+    <ClInclude Include="GameFramework\Game\CApplication.h" />
+    <ClInclude Include="GameFramework\Game\CGame.h" />
+    <ClInclude Include="GameFramework\Interfaces\IRender.h" />
+    <ClInclude Include="GameFramework\Level\CLevel.h" />
+    <ClInclude Include="GameFramework\Library\LCCollision.h" />
+    <ClInclude Include="GameFramework\Library\LCMath.h" />
+    <ClInclude Include="GameFramework\Managers\CColliderManager.h" />
+    <ClInclude Include="GameFramework\Managers\CDirectXResourceManager.h" />
+    <ClInclude Include="GameFramework\Managers\CGameManager.h" />
+    <ClInclude Include="GameFramework\Managers\CInputManager.h" />
+    <ClInclude Include="GameFramework\Managers\CLightManager.h" />
+    <ClInclude Include="GameFramework\Managers\CModelDataManager.h" />
+    <ClInclude Include="GameFramework\Managers\CSoundManager.h" />
+    <ClInclude Include="GameFramework\Object\CObject.h" />
+    <ClInclude Include="GameFramework\Transform\CRotator.h" />
+    <ClInclude Include="GameFramework\Transform\CTransform.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\basicps.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader\basicvs.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader\ps.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader\psline.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader\psnotex.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader\pstexcol.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader\psvscommon.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader\vs.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader\vsline.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader\vsnotex.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GameFramework\ExternalLibrary\DirectXTex\include\DirectXTex.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
