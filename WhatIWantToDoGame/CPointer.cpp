@@ -1,5 +1,5 @@
 #include "CPointer.h"
-#include "CTraiActor.h"
+#include "CTrailActor.h"
 #include "GameFramework/Components/CBillboardComponent.h"
 #include "GameFramework/Game/CApplication.h"
 #include "GameFramework/Managers/CInputManager.h"

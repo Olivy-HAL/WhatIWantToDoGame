@@ -74,6 +74,12 @@
     <IncludePath>$(ProjectDir)GameFramework\ExternalLibrary\Assimp\assimp\include;$(ProjectDir)GameFramework\ExternalLibrary\DirectXTex\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)GameFramework\ExternalLibrary\Assimp\assimp\lib;$(ProjectDir)GameFramework\ExternalLibrary\DirectXTex\lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)GameFramework\ExternalLibrary\Assimp\assimp\lib;$(ProjectDir)GameFramework\ExternalLibrary\DirectXTex\lib\;$(LibraryPath)</LibraryPath>
+    <TargetName>Game</TargetName>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -123,11 +129,16 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -136,6 +147,7 @@
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CEnemyGenerator.cpp" />
     <ClCompile Include="CFighter.cpp" />
+    <ClCompile Include="CGround.cpp" />
     <ClCompile Include="CMainGameLevel.cpp" />
     <ClCompile Include="CMainUI.cpp" />
     <ClCompile Include="CMissile.cpp" />
@@ -149,8 +161,8 @@
     <ClCompile Include="CTitle.cpp" />
     <ClCompile Include="CTitleActor.cpp" />
     <ClCompile Include="CTitleOp.cpp" />
-    <ClCompile Include="CTraiActor.cpp" />
-    <ClCompile Include="CTraiLevel.cpp" />
+    <ClCompile Include="CTrailActor.cpp" />
+    <ClCompile Include="CTrailLevel.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
     <ClCompile Include="GameFramework\Actor\CActor.cpp" />
     <ClCompile Include="GameFramework\Components\C2DAnimationComponent.cpp" />
@@ -216,6 +228,7 @@
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CEnemyGenerator.h" />
     <ClInclude Include="CFighter.h" />
+    <ClInclude Include="CGround.h" />
     <ClInclude Include="CMainGameLevel.h" />
     <ClInclude Include="CMainUI.h" />
     <ClInclude Include="CMissile.h" />
@@ -229,8 +242,8 @@
     <ClInclude Include="CTitle.h" />
     <ClInclude Include="CTitleActor.h" />
     <ClInclude Include="CTitleOp.h" />
-    <ClInclude Include="CTraiActor.h" />
-    <ClInclude Include="CTraiLevel.h" />
+    <ClInclude Include="CTrailActor.h" />
+    <ClInclude Include="CTrailLevel.h" />
     <ClInclude Include="GameFramework\Actor\CActor.h" />
     <ClInclude Include="GameFramework\Actor\CActorGenerator.h" />
     <ClInclude Include="GameFramework\Actor\CCameraActor.h" />
@@ -306,33 +319,43 @@
   <ItemGroup>
     <FxCompile Include="Shader\basicps.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Shader\basicvs.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Shader\ps.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Shader\psline.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Shader\psnotex.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Shader\pstexcol.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Shader\psvscommon.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Shader\vs.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Shader\vsline.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Shader\vsnotex.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

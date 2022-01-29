@@ -406,10 +406,13 @@
     <ClCompile Include="GameFramework\ExternalLibrary\DirectXTex\include\WICTextureLoader.cpp">
       <Filter>Framework\ExternalLibrary\ソース</Filter>
     </ClCompile>
-    <ClCompile Include="CTraiLevel.cpp">
+    <ClCompile Include="CGround.cpp">
       <Filter>Original\Trial\ソース</Filter>
     </ClCompile>
-    <ClCompile Include="CTraiActor.cpp">
+    <ClCompile Include="CTrailActor.cpp">
+      <Filter>Original\Trial\ソース</Filter>
+    </ClCompile>
+    <ClCompile Include="CTrailLevel.cpp">
       <Filter>Original\Trial\ソース</Filter>
     </ClCompile>
   </ItemGroup>
@@ -681,10 +684,13 @@
     <ClInclude Include="GameFramework\ExternalLibrary\DirectXTex\include\WICTextureLoader.h">
       <Filter>Framework\ExternalLibrary\ヘッダー</Filter>
     </ClInclude>
-    <ClInclude Include="CTraiLevel.h">
+    <ClInclude Include="CGround.h">
       <Filter>Original\Trial\ヘッダー</Filter>
     </ClInclude>
-    <ClInclude Include="CTraiActor.h">
+    <ClInclude Include="CTrailActor.h">
+      <Filter>Original\Trial\ヘッダー</Filter>
+    </ClInclude>
+    <ClInclude Include="CTrailLevel.h">
       <Filter>Original\Trial\ヘッダー</Filter>
     </ClInclude>
   </ItemGroup>
