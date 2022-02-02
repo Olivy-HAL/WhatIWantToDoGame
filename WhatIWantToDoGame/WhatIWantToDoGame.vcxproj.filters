@@ -415,6 +415,9 @@
     <ClCompile Include="CTrailLevel.cpp">
       <Filter>Original\Trial\ソース</Filter>
     </ClCompile>
+    <ClCompile Include="CFog.cpp">
+      <Filter>Original\Trial\ソース</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameFramework\Actor\CActor.h">
@@ -691,6 +694,9 @@
       <Filter>Original\Trial\ヘッダー</Filter>
     </ClInclude>
     <ClInclude Include="CTrailLevel.h">
+      <Filter>Original\Trial\ヘッダー</Filter>
+    </ClInclude>
+    <ClInclude Include="CFog.h">
       <Filter>Original\Trial\ヘッダー</Filter>
     </ClInclude>
   </ItemGroup>

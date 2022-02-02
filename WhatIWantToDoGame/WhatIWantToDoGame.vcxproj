@@ -147,6 +147,7 @@
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CEnemyGenerator.cpp" />
     <ClCompile Include="CFighter.cpp" />
+    <ClCompile Include="CFog.cpp" />
     <ClCompile Include="CGround.cpp" />
     <ClCompile Include="CMainGameLevel.cpp" />
     <ClCompile Include="CMainUI.cpp" />
@@ -228,6 +229,7 @@
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CEnemyGenerator.h" />
     <ClInclude Include="CFighter.h" />
+    <ClInclude Include="CFog.h" />
     <ClInclude Include="CGround.h" />
     <ClInclude Include="CMainGameLevel.h" />
     <ClInclude Include="CMainUI.h" />

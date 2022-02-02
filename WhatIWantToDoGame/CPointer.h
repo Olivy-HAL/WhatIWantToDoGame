@@ -2,8 +2,6 @@
 #include <memory>
 #include "GameFramework/Actor/CActor.h"
 
-class CTraiActor;
-
 class CPointer :public CActor
 {
 private:
