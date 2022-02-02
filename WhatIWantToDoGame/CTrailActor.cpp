@@ -17,6 +17,7 @@
 #include "CBullet.h"
 #include "CMissile.h"
 #include "CTrailActor.h"
+#include "CFog.h"
 
 CTrailActor::CTrailActor(ILevel& owner) :CActor(owner), mPointer(*new CPointer(owner, *this)),
 mSpeedLimitMin(mSpeed / 2.0f), mSpeedLimitMax(mSpeed*2.0f)
@@ -72,11 +73,11 @@ mSpeedLimitMin(mSpeed / 2.0f), mSpeedLimitMax(mSpeed*2.0f)
 	/*new CParticleGeneratorComponent(*this, Transform, std::bind(&CFighter::Particle, std::ref(*this), std::placeholders::_1), 0.3f, 1.f, 30,
 		*new CParticleBaseGeneratorCone(forwardVec, 30),100000);*/
 
-		/*
-		★超重要★
-		ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
-		他にも追加方法があるのでインプットマネージャーのヘッダーを確認することを推奨
-		*/
+	/*
+	★超重要★
+	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
+	他にも追加方法があるのでインプットマネージャーのヘッダーを確認することを推奨
+	*/
 	CInputManager::GetInstance().AddEvent("Shot", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_SPACE }, std::bind(&CTrailActor::Shot, std::ref(*this)));
 	CInputManager::GetInstance().AddEvent("Rot-Y", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_A }, std::bind(&CTrailActor::Rot, std::ref(*this), 0));
 	CInputManager::GetInstance().AddEvent("Rot+Y", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_D }, std::bind(&CTrailActor::Rot, std::ref(*this), 1));
@@ -210,6 +211,24 @@ void CTrailActor::SpeedChange(int type)
 	else if (type == 1)
 	{
 		if (mSpeed > mSpeedLimitMin)mSpeed -= 0.5f;
+	}
+
+	if (fmod(mSpeed,15) == 0)
+	{
+		std::random_device randomSeed;							//乱数デバイス
+		std::mt19937 randomEngine(randomSeed());				//乱数アルゴリズム
+		std::uniform_int_distribution<> randomScopeX(0, 100);	//範囲指定乱数生成器X軸
+		std::uniform_int_distribution<> randomScopeY(0, 100);	//範囲指定乱数生成器Y軸
+		std::uniform_int_distribution<> randomScopeZ(0, 100);	//範囲指定乱数生成器Z軸
+		int randomX = randomScopeX(randomEngine) / 100;
+		int randomY = randomScopeY(randomEngine) / 100;
+		int randomZ = randomScopeZ(randomEngine) / 100;
+		XMFLOAT3 loc = Transform.Location;
+		loc.x += randomX;
+		loc.y += randomY;
+		loc.z += randomZ;
+
+		new CFog(mOwnerInterface,loc);
 	}
 }
 
