@@ -64,20 +64,20 @@ mSpeedLimitMin(mSpeed / 2.0f), mSpeedLimitMax(mSpeed*2.0f)
 
 	Transform.RequestDebugLine();
 
-	XMFLOAT3 forwardVec = Transform.GetForwardVectorWorld();
+	/*XMFLOAT3 forwardVec = Transform.GetForwardVectorWorld();
 	forwardVec.x *= -1;
 	forwardVec.y *= -1;
-	forwardVec.z *= -1;
+	forwardVec.z *= -1;*/
 
 	//コーンパーティクル作成
 	/*new CParticleGeneratorComponent(*this, Transform, std::bind(&CFighter::Particle, std::ref(*this), std::placeholders::_1), 0.3f, 1.f, 30,
 		*new CParticleBaseGeneratorCone(forwardVec, 30),100000);*/
 
-	/*
-	★超重要★
-	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
-	他にも追加方法があるのでインプットマネージャーのヘッダーを確認することを推奨
-	*/
+		/*
+		★超重要★
+		ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
+		他にも追加方法があるのでインプットマネージャーのヘッダーを確認することを推奨
+		*/
 	CInputManager::GetInstance().AddEvent("Shot", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_SPACE }, std::bind(&CTrailActor::Shot, std::ref(*this)));
 	CInputManager::GetInstance().AddEvent("Rot-Y", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_A }, std::bind(&CTrailActor::Rot, std::ref(*this), 0));
 	CInputManager::GetInstance().AddEvent("Rot+Y", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_D }, std::bind(&CTrailActor::Rot, std::ref(*this), 1));
@@ -213,7 +213,7 @@ void CTrailActor::SpeedChange(int type)
 		if (mSpeed > mSpeedLimitMin)mSpeed -= 0.5f;
 	}
 
-	if (fmod(mSpeed,15) == 0)
+	if (fmod(mSpeed, 15) == 0)
 	{
 		std::random_device randomSeed;							//乱数デバイス
 		std::mt19937 randomEngine(randomSeed());				//乱数アルゴリズム
@@ -228,29 +228,31 @@ void CTrailActor::SpeedChange(int type)
 		loc.y += randomY;
 		loc.z += randomZ;
 
-		new CFog(mOwnerInterface,loc);
+		new CFog(mOwnerInterface, loc);
 	}
 }
 
 void CTrailActor::Tick()
 {
-		Move();
-		if (!mRotFlag)
+	Move();
+	if (!mRotFlag)
+	{
+		if (mMeshRotZ > 0)
 		{
-			if (mMeshRotZ > 0)
-			{
-				mMeshRotZ -= 1.5;
-				mScene->Transform.Rotation.AddAngleRelative({ 0,0,-1.5f });
-			}
-			else if (mMeshRotZ < 0)
-			{
-				mMeshRotZ += 1.5;
-				mScene->Transform.Rotation.AddAngleRelative({ 0,0,1.5f });
-			}
+			mMeshRotZ -= 1.5;
+			Transform.Rotation.AddAngleRelative({ 0,-0.5,0 });
+			mScene->Transform.Rotation.AddAngleRelative({ 0,0,-1.5f });
 		}
+		else if (mMeshRotZ < 0)
+		{
+			mMeshRotZ += 1.5;
+			Transform.Rotation.AddAngleRelative({ 0,0.5,0 });
+			mScene->Transform.Rotation.AddAngleRelative({ 0,0,1.5f });
+		}
+	}
 
-		mRotFlag = false;
-		mIsParticleFlag = false;
+	mRotFlag = false;
+	mIsParticleFlag = false;
 }
 
 void CTrailActor::EventAtBeginCollide(CActor& collideActor)

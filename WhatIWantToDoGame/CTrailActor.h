@@ -12,11 +12,6 @@
 class CTrailActor :public CActor
 {
 private:
-	typedef struct CameraStatus
-	{
-		XMFLOAT3 StartPos;
-		XMFLOAT3 EndPos;
-	};
 
 	CPointer& mPointer;
 	CStaticMeshComponent *mMesh;
@@ -26,7 +21,6 @@ private:
 	XMFLOAT3 mParticleLocR;
 	XMFLOAT3 mParticleLocL;
 
-	CameraStatus mCameraStatus;
 	int mShotCnt = 0;
 	int mRot = 0;
 
@@ -37,7 +31,6 @@ private:
 
 	bool mRotFlag = false;
 	bool mIsParticleFlag = false;
-
 
 public:
 	/*

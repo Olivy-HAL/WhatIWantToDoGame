@@ -13,16 +13,22 @@ CFog::CFog(ILevel& partner, XMFLOAT3 loc) :CActor(partner)
 	Transform.Location = loc;
 	if (random == 0)
 	{
-		CBillboardComponent& billboard = *new CBillboardComponent(*this, Transform, "Assets/Textures/Trail/ñ∂ç∑ï™1.png");
-		billboard.Transform.Scale = { 100.0f,100.0f,1.0f };
+		CBillboardComponent& billboard = *new CBillboardComponent(*this, Transform, "Assets/Textures/Trail/Fog01.png");
+		billboard.Transform.Scale = { 70.0f,70.0f,1.0f };
 		billboard.SetColor({ 1,1,1,0.02 });
 	}
-	else
+	else if(random == 1)
 	{
-		CBillboardComponent& billboard = *new CBillboardComponent(*this, Transform, "Assets/Textures/Trail/ñ∂ç∑ï™2.png");
-		billboard.Transform.Scale = { 100.0f,100.0f,1.0f };
+		CBillboardComponent& billboard = *new CBillboardComponent(*this, Transform, "Assets/Textures/Trail/Fog02.png");
+		billboard.Transform.Scale = { 70.0f,70.0f,1.0f };
 		billboard.SetColor({ 1,1,1,0.02 });
 	}
+	/*else
+	{
+		CBillboardComponent& billboard = *new CBillboardComponent(*this, Transform, "Assets/Textures/Trail/Fog03.jpg");
+		billboard.Transform.Scale = { 100.0f,100.0f,1.0f };
+		billboard.SetColor({ 1,1,1,0.02 });
+	}*/
 }
 
 void CFog::Tick()
