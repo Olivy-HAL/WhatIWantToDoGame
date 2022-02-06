@@ -2,6 +2,7 @@
 
 #include "CFog.h"
 #include "GameFramework/Components/CBillboardComponent.h"
+#include "GameFramework/Components/CSphereMeshComponent.h"
 
 CFog::CFog(ILevel& partner, XMFLOAT3 loc) :CActor(partner)
 {

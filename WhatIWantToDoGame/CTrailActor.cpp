@@ -56,7 +56,7 @@ mSpeedLimitMin(mSpeed / 2.0f), mSpeedLimitMax(mSpeed*2.0f)
 	camera.SetView(cameraLoc, loc, { 0.f,1.f,0.f });
 
 	CSpringArmComponent& spr = *new CSpringArmComponent(*this, Transform, camera);
-	spr.SetLerpTime(0.3f);
+	spr.SetLerpTime(0.2f);
 
 	CSphereColliderComponent& collider = *new CSphereColliderComponent(*this, mMesh->GetModel(), Transform);
 	collider.Transform.Location.y += 2.0f;
@@ -232,6 +232,26 @@ void CTrailActor::SpeedChange(int type)
 	}
 }
 
+void CTrailActor::ControlUnit()
+{
+	XMFLOAT3 angle = LCMath::TransformFromMatrixToEulerAngles(Transform.GetWorldMatrixResult());
+
+	if (angle.z != 0)
+	{
+		if (std::abs(angle.z) < 1)
+		{
+			Transform.Rotation.SetAngle({ 0,0,0 });
+		}
+		else
+		{
+			float angleZ = 0;
+			angleZ = angle.z / 2 * -1;
+			Transform.Rotation.AddAngleRelative({ 0,0,angleZ });
+		}
+
+	}
+}
+
 void CTrailActor::Tick()
 {
 	Move();
@@ -249,6 +269,11 @@ void CTrailActor::Tick()
 			Transform.Rotation.AddAngleRelative({ 0,0.5,0 });
 			mScene->Transform.Rotation.AddAngleRelative({ 0,0,1.5f });
 		}
+		else
+		{
+			//ControlUnit();
+		}
+
 	}
 
 	mRotFlag = false;
