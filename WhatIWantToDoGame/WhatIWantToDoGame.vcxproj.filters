@@ -409,13 +409,13 @@
     <ClCompile Include="CGround.cpp">
       <Filter>Original\Trial\ソース</Filter>
     </ClCompile>
-    <ClCompile Include="CTrailActor.cpp">
-      <Filter>Original\Trial\ソース</Filter>
-    </ClCompile>
-    <ClCompile Include="CTrailLevel.cpp">
-      <Filter>Original\Trial\ソース</Filter>
-    </ClCompile>
     <ClCompile Include="CFog.cpp">
+      <Filter>Original\Trial\ソース</Filter>
+    </ClCompile>
+    <ClCompile Include="CTrialActor.cpp">
+      <Filter>Original\Trial\ソース</Filter>
+    </ClCompile>
+    <ClCompile Include="CTrialLevel.cpp">
       <Filter>Original\Trial\ソース</Filter>
     </ClCompile>
   </ItemGroup>
@@ -690,13 +690,13 @@
     <ClInclude Include="CGround.h">
       <Filter>Original\Trial\ヘッダー</Filter>
     </ClInclude>
-    <ClInclude Include="CTrailActor.h">
-      <Filter>Original\Trial\ヘッダー</Filter>
-    </ClInclude>
-    <ClInclude Include="CTrailLevel.h">
-      <Filter>Original\Trial\ヘッダー</Filter>
-    </ClInclude>
     <ClInclude Include="CFog.h">
+      <Filter>Original\Trial\ヘッダー</Filter>
+    </ClInclude>
+    <ClInclude Include="CTrialActor.h">
+      <Filter>Original\Trial\ヘッダー</Filter>
+    </ClInclude>
+    <ClInclude Include="CTrialLevel.h">
       <Filter>Original\Trial\ヘッダー</Filter>
     </ClInclude>
   </ItemGroup>

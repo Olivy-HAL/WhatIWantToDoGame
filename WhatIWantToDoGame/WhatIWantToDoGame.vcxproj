@@ -162,8 +162,8 @@
     <ClCompile Include="CTitle.cpp" />
     <ClCompile Include="CTitleActor.cpp" />
     <ClCompile Include="CTitleOp.cpp" />
-    <ClCompile Include="CTrailActor.cpp" />
-    <ClCompile Include="CTrailLevel.cpp" />
+    <ClCompile Include="CTrialActor.cpp" />
+    <ClCompile Include="CTrialLevel.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
     <ClCompile Include="GameFramework\Actor\CActor.cpp" />
     <ClCompile Include="GameFramework\Components\C2DAnimationComponent.cpp" />
@@ -244,8 +244,8 @@
     <ClInclude Include="CTitle.h" />
     <ClInclude Include="CTitleActor.h" />
     <ClInclude Include="CTitleOp.h" />
-    <ClInclude Include="CTrailActor.h" />
-    <ClInclude Include="CTrailLevel.h" />
+    <ClInclude Include="CTrialActor.h" />
+    <ClInclude Include="CTrialLevel.h" />
     <ClInclude Include="GameFramework\Actor\CActor.h" />
     <ClInclude Include="GameFramework\Actor\CActorGenerator.h" />
     <ClInclude Include="GameFramework\Actor\CCameraActor.h" />

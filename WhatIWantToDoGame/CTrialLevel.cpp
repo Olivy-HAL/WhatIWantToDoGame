@@ -1,16 +1,16 @@
 #include "GameFramework/Components/CCameraComponent.h"
 #include "GameFramework/Managers/CLightManager.h"
 
-#include "CTrailLevel.h"
+#include "CTrialLevel.h"
 #include "CSkyDome.h"
-#include "CTrailActor.h"
+#include "CTrialActor.h"
 #include "CGround.h"
 
-void CTrailLevel::Init()
+void CTrialLevel::Init()
 {
 	CComponent* buf;
 	CSkyDome& skyDome = *new CSkyDome(*this);
-	CTrailActor& player = *new CTrailActor(*this);
+	CTrialActor& player = *new CTrialActor(*this);
 	player.Transform.Location = {0,50,0};
 	CGround& ground = *new CGround(*this);
 
@@ -22,7 +22,7 @@ void CTrailLevel::Init()
 
 }
 
-void CTrailLevel::Tick()
+void CTrialLevel::Tick()
 {
 
 }

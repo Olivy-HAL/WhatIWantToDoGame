@@ -16,10 +16,10 @@
 
 #include "CBullet.h"
 #include "CMissile.h"
-#include "CTrailActor.h"
+#include "CTrialActor.h"
 #include "CFog.h"
 
-CTrailActor::CTrailActor(ILevel& owner) :CActor(owner), mPointer(*new CPointer(owner, *this)),
+CTrialActor::CTrialActor(ILevel& owner) :CActor(owner), mPointer(*new CPointer(owner, *this)),
 mSpeedLimitMin(mSpeed / 2.0f), mSpeedLimitMax(mSpeed*2.0f)
 {
 	Transform.AttachTransform(mPointer.Transform);
@@ -73,22 +73,23 @@ mSpeedLimitMin(mSpeed / 2.0f), mSpeedLimitMax(mSpeed*2.0f)
 	/*new CParticleGeneratorComponent(*this, Transform, std::bind(&CFighter::Particle, std::ref(*this), std::placeholders::_1), 0.3f, 1.f, 30,
 		*new CParticleBaseGeneratorCone(forwardVec, 30),100000);*/
 
-		/*
-		★超重要★
-		ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
-		他にも追加方法があるのでインプットマネージャーのヘッダーを確認することを推奨
-		*/
-	CInputManager::GetInstance().AddEvent("Shot", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_SPACE }, std::bind(&CTrailActor::Shot, std::ref(*this)));
-	CInputManager::GetInstance().AddEvent("Rot-Y", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_A }, std::bind(&CTrailActor::Rot, std::ref(*this), 0));
-	CInputManager::GetInstance().AddEvent("Rot+Y", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_D }, std::bind(&CTrailActor::Rot, std::ref(*this), 1));
-	CInputManager::GetInstance().AddEvent("Rot-X", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_W }, std::bind(&CTrailActor::Rot, std::ref(*this), 2));
-	CInputManager::GetInstance().AddEvent("Rot+X", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_S }, std::bind(&CTrailActor::Rot, std::ref(*this), 3));
-	CInputManager::GetInstance().AddEvent("SpeedUP", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_UP }, std::bind(&CTrailActor::SpeedChange, std::ref(*this), 0));
-	CInputManager::GetInstance().AddEvent("SpeedDPWN", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_DOWN }, std::bind(&CTrailActor::SpeedChange, std::ref(*this), 1));
+	/*
+	★超重要★
+	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
+	他にも追加方法があるのでインプットマネージャーのヘッダーを確認することを推奨
+	*/
+	CInputManager::GetInstance().AddEvent("Shot", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_SPACE }, std::bind(&CTrialActor::Shot, std::ref(*this)));
+	CInputManager::GetInstance().AddEvent("Rot-Y", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_A }, std::bind(&CTrialActor::Rot, std::ref(*this), 0));
+	CInputManager::GetInstance().AddEvent("Rot+Y", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_D }, std::bind(&CTrialActor::Rot, std::ref(*this), 1));
+	CInputManager::GetInstance().AddEvent("Rot-X", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_W }, std::bind(&CTrialActor::Rot, std::ref(*this), 2));
+	CInputManager::GetInstance().AddEvent("Rot+X", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_S }, std::bind(&CTrialActor::Rot, std::ref(*this), 3));
+	CInputManager::GetInstance().AddEvent("SpeedUP", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_UP }, std::bind(&CTrialActor::SpeedChange, std::ref(*this), 0));
+	CInputManager::GetInstance().AddEvent("SpeedDPWN", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_DOWN }, std::bind(&CTrialActor::SpeedChange, std::ref(*this), 1));
+	CInputManager::GetInstance().AddEvent("Turn", EButtonOption::TRIGGER, *this, { EButtonType::KEYBOARD,DIK_LSHIFT }, std::bind(&CTrialActor::Turning, std::ref(*this)));
 	//CInputManager::GetInstance().AddEvent("Reset" , EButtonOption::RELEASE , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::ShotReset , std::ref(*this)));
 }
 
-void CTrailActor::Shot()
+void CTrialActor::Shot()
 {
 	if (mShotCnt % 5 != 0)
 	{
@@ -122,19 +123,19 @@ void CTrailActor::Shot()
 
 	/*	missilePos_R.x += 5.f;
 		missilePos_L.x -= 5.f;*/
-		//new CBullet(mOwnerInterface, loc, dire, 60 * 3, "PlayerBullet", { 1.0f,1.0f,0.0f,1.0f });
+	//new CBullet(mOwnerInterface, loc, dire, 60 * 3, "PlayerBullet", { 1.0f,1.0f,0.0f,1.0f });
 	new CMissile(mOwnerInterface, missilePos_R, dire, qua, 60, "PlayerBullet");
 	new CMissile(mOwnerInterface, missilePos_L, dire, qua, 60, "PlayerBullet");
 
 	CSoundManager::GetInstance().PlaySound("SHOT");
 }
 
-void CTrailActor::ShotReset()
+void CTrialActor::ShotReset()
 {
 	mShotCnt = 0;
 }
 
-void CTrailActor::Move()
+void CTrialActor::Move()
 {
 	XMFLOAT3 fv = Transform.GetForwardVectorRelative();
 	float dt = CGameManager::GetInstance().GetDeltaTime();
@@ -144,7 +145,7 @@ void CTrailActor::Move()
 	Transform.Location.z += fv.z * (mSpeed*dt);
 }
 
-void CTrailActor::Particle(CActor& actor)
+void CTrialActor::Particle(CActor& actor)
 {
 	if (!mIsParticleFlag)
 	{
@@ -167,7 +168,7 @@ void CTrailActor::Particle(CActor& actor)
 	sphereMesh2.Transform.Location = mParticleLocL;
 }
 
-void CTrailActor::Rot(int dire)
+void CTrialActor::Rot(int dire)
 {
 	if (dire == 0)
 	{
@@ -179,6 +180,10 @@ void CTrailActor::Rot(int dire)
 			mScene->Transform.Rotation.AddAngleRelative({ 0,0,1.5f });
 		}
 	}
+	else if (dire == 0 && mTurn)
+	{
+
+	}
 	else if (dire == 1)
 	{
 		mRotFlag = true;
@@ -189,20 +194,31 @@ void CTrailActor::Rot(int dire)
 			mScene->Transform.Rotation.AddAngleRelative({ 0,0,-1.5f });
 		}
 	}
-	else if (dire == 2)
+	else if (dire == 1 && mTurn)
 	{
 
+	}
+	else if (dire == 2)
+	{
 		Transform.Rotation.AddAngleRelative({ -1,0,0 });
 	}
 	else if (dire == 3)
 	{
-
 		Transform.Rotation.AddAngleRelative({ 1,0,0 });
 	}
+}
+
+void CTrialActor::Turning()
+{
+	mTurn = true;
+}
+
+void CTrialActor::Turn()
+{
 
 }
 
-void CTrailActor::SpeedChange(int type)
+void CTrialActor::SpeedChange(int type)
 {
 	if (type == 0)
 	{
@@ -232,7 +248,7 @@ void CTrailActor::SpeedChange(int type)
 	}
 }
 
-void CTrailActor::ControlUnit()
+void CTrialActor::ControlUnit()
 {
 	XMFLOAT3 angle = LCMath::TransformFromMatrixToEulerAngles(Transform.GetWorldMatrixResult());
 
@@ -252,11 +268,12 @@ void CTrailActor::ControlUnit()
 	}
 }
 
-void CTrailActor::Tick()
+void CTrialActor::Tick()
 {
 	Move();
 	if (!mRotFlag)
 	{
+		mTurn = false;
 		if (mMeshRotZ > 0)
 		{
 			mMeshRotZ -= 1.5;
@@ -273,14 +290,21 @@ void CTrailActor::Tick()
 		{
 			//ControlUnit();
 		}
+	}
+	else
+	{
+		if (mTurn)
+		{
+			mTurn = false;
 
+		}
 	}
 
 	mRotFlag = false;
 	mIsParticleFlag = false;
 }
 
-void CTrailActor::EventAtBeginCollide(CActor& collideActor)
+void CTrialActor::EventAtBeginCollide(CActor& collideActor)
 {
 	if (collideActor.HasTag("EnemyBullet"))
 	{

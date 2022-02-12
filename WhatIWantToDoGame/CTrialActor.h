@@ -9,7 +9,7 @@
 #define MAXROT 50
 #define ROTSPEED 0.05
 
-class CTrailActor :public CActor
+class CTrialActor :public CActor
 {
 private:
 
@@ -30,6 +30,7 @@ private:
 	float mSpeedLimitMin, mSpeedLimitMax;
 
 	bool mRotFlag = false;
+	bool mTurn = true;
 	bool mIsParticleFlag = false;
 
 	void Shot();
@@ -37,6 +38,8 @@ private:
 	void Move();
 	void Particle(CActor& actor);
 	void Rot(int dire);
+	void Turning();
+	void Turn();
 	void SpeedChange(int type);
 	void ControlUnit();
 	float GetSpeed() { return mSpeed; }
@@ -48,7 +51,6 @@ public:
 	★超重要★
 	コンポーネントの追加は基本的にコンストラクタ内で行う
 	*/
-	CTrailActor(ILevel& owner);
-
+	CTrialActor(ILevel& owner);
 
 };

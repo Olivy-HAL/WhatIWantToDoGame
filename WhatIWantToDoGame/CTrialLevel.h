@@ -2,7 +2,7 @@
 
 #include "GameFramework/Level/CLevel.h"
 
-class CTrailLevel :public CLevel
+class CTrialLevel :public CLevel
 {
 private:
 public:
