@@ -81,8 +81,8 @@ mSpeedLimitMin(mSpeed / 2.0f), mSpeedLimitMax(mSpeed*2.0f)
 	CInputManager::GetInstance().AddEvent("TurnLeft", EButtonOption::RELEASE, *this, { EButtonType::KEYBOARD,DIK_A }, std::bind(&CTrialActor::Turning, std::ref(*this), 0));
 	CInputManager::GetInstance().AddEvent("TurnRight", EButtonOption::RELEASE, *this, { EButtonType::KEYBOARD,DIK_D }, std::bind(&CTrialActor::Turning, std::ref(*this), 1));
 	CInputManager::GetInstance().AddEvent("Shot", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_SPACE }, std::bind(&CTrialActor::Shot, std::ref(*this)));
-	CInputManager::GetInstance().AddEvent("Rot-Y", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_A }, std::bind(&CTrialActor::Rot, std::ref(*this), 0));
-	CInputManager::GetInstance().AddEvent("Rot+Y", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_D }, std::bind(&CTrialActor::Rot, std::ref(*this), 1));
+	CInputManager::GetInstance().AddEvent("Left", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_A }, std::bind(&CTrialActor::Rot, std::ref(*this), 0));
+	CInputManager::GetInstance().AddEvent("Right", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_D }, std::bind(&CTrialActor::Rot, std::ref(*this), 1));
 	CInputManager::GetInstance().AddEvent("Rot-X", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_W }, std::bind(&CTrialActor::Rot, std::ref(*this), 2));
 	CInputManager::GetInstance().AddEvent("Rot+X", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_S }, std::bind(&CTrialActor::Rot, std::ref(*this), 3));
 	CInputManager::GetInstance().AddEvent("SpeedUP", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_UP }, std::bind(&CTrialActor::SpeedChange, std::ref(*this), 0));
@@ -216,12 +216,12 @@ void CTrialActor::Rot(int dire)
 
 void CTrialActor::Turning(int dire)
 {
-	if (dire == 0 && !mTurn)
+	if (!mTurn && dire == 0)
 	{
 		mTurnLeft = true;
 		mTurnRight = false;
 	}
-	else if (dire == 1 && !mTurn)
+	else if (!mTurn && dire == 1)
 	{
 		mTurnRight = true;
 		mTurnLeft = false;
@@ -232,17 +232,17 @@ void CTrialActor::Turning(int dire)
 void CTrialActor::Turn()
 {
 	XMFLOAT3 rightVc = Transform.GetRightVectorRelative();
-	mTurnGauge -= 3;
+	mTurnGauge -= 10;
 	if (mTurnLeft)
 	{
-		mScene->Transform.Rotation.AddAngleRelative({ 0,0,-3 });
+		mScene->Transform.Rotation.AddAngleRelative({ 0,0, 10 });
 		Transform.Location.x -= rightVc.x;
 		Transform.Location.y -= rightVc.y;
 		Transform.Location.z -= rightVc.z;
 	}
 	else if (mTurnRight)
 	{
-		mScene->Transform.Rotation.AddAngleRelative({ 0,0,3 });
+		mScene->Transform.Rotation.AddAngleRelative({ 0,0, - 10 });
 		Transform.Location.x += rightVc.x;
 		Transform.Location.y += rightVc.y;
 		Transform.Location.z += rightVc.z;
