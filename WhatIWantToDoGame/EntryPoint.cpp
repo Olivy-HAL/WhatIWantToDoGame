@@ -28,7 +28,7 @@
 
 #include "CTitle.h"
 #include "CTitleOp.h"
-#include "CTrailLevel.h"
+#include "CTrialLevel.h"
 
 //==============================================================================
 //!	@fn		WinMain
@@ -56,7 +56,7 @@ INT APIENTRY WinMain(HINSTANCE  h_hInst ,
 	*/
 	//new CTitle(gameManager.GetGameInterface());
 	//new CTitleOp(gameManager.GetGameInterface());
-	new CTrailLevel(gameManager.GetGameInterface());
+	new CTrialLevel(gameManager.GetGameInterface());
 
 	//ゲームの実行をリクエスト
 	gameManager.RequestExecute(h_hInst , h_nWinMode);

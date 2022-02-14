@@ -24,13 +24,16 @@ private:
 	int mShotCnt = 0;
 	int mRot = 0;
 
-	float mActorRotX = 0.f;
 	float mMeshRotZ = 0.f;
 	float mSpeed = 100.0f;
 	float mSpeedLimitMin, mSpeedLimitMax;
+	float mTurnGauge = 360.f;
+	float mDelayCount = 5;
 
 	bool mRotFlag = false;
-	bool mTurn = true;
+	bool mTurn = false;
+	bool mTurnLeft = false;
+	bool mTurnRight = false;
 	bool mIsParticleFlag = false;
 
 	void Shot();
@@ -38,7 +41,7 @@ private:
 	void Move();
 	void Particle(CActor& actor);
 	void Rot(int dire);
-	void Turning();
+	void Turning(int dire);
 	void Turn();
 	void SpeedChange(int type);
 	void ControlUnit();

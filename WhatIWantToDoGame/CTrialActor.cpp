@@ -73,11 +73,13 @@ mSpeedLimitMin(mSpeed / 2.0f), mSpeedLimitMax(mSpeed*2.0f)
 	/*new CParticleGeneratorComponent(*this, Transform, std::bind(&CFighter::Particle, std::ref(*this), std::placeholders::_1), 0.3f, 1.f, 30,
 		*new CParticleBaseGeneratorCone(forwardVec, 30),100000);*/
 
-	/*
-	★超重要★
-	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
-	他にも追加方法があるのでインプットマネージャーのヘッダーを確認することを推奨
-	*/
+		/*
+		★超重要★
+		ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
+		他にも追加方法があるのでインプットマネージャーのヘッダーを確認することを推奨
+		*/
+	CInputManager::GetInstance().AddEvent("TurnLeft", EButtonOption::RELEASE, *this, { EButtonType::KEYBOARD,DIK_A }, std::bind(&CTrialActor::Turning, std::ref(*this), 0));
+	CInputManager::GetInstance().AddEvent("TurnRight", EButtonOption::RELEASE, *this, { EButtonType::KEYBOARD,DIK_D }, std::bind(&CTrialActor::Turning, std::ref(*this), 1));
 	CInputManager::GetInstance().AddEvent("Shot", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_SPACE }, std::bind(&CTrialActor::Shot, std::ref(*this)));
 	CInputManager::GetInstance().AddEvent("Rot-Y", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_A }, std::bind(&CTrialActor::Rot, std::ref(*this), 0));
 	CInputManager::GetInstance().AddEvent("Rot+Y", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_D }, std::bind(&CTrialActor::Rot, std::ref(*this), 1));
@@ -85,7 +87,6 @@ mSpeedLimitMin(mSpeed / 2.0f), mSpeedLimitMax(mSpeed*2.0f)
 	CInputManager::GetInstance().AddEvent("Rot+X", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_S }, std::bind(&CTrialActor::Rot, std::ref(*this), 3));
 	CInputManager::GetInstance().AddEvent("SpeedUP", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_UP }, std::bind(&CTrialActor::SpeedChange, std::ref(*this), 0));
 	CInputManager::GetInstance().AddEvent("SpeedDPWN", EButtonOption::PRESS, *this, { EButtonType::KEYBOARD,DIK_DOWN }, std::bind(&CTrialActor::SpeedChange, std::ref(*this), 1));
-	CInputManager::GetInstance().AddEvent("Turn", EButtonOption::TRIGGER, *this, { EButtonType::KEYBOARD,DIK_LSHIFT }, std::bind(&CTrialActor::Turning, std::ref(*this)));
 	//CInputManager::GetInstance().AddEvent("Reset" , EButtonOption::RELEASE , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::ShotReset , std::ref(*this)));
 }
 
@@ -123,7 +124,7 @@ void CTrialActor::Shot()
 
 	/*	missilePos_R.x += 5.f;
 		missilePos_L.x -= 5.f;*/
-	//new CBullet(mOwnerInterface, loc, dire, 60 * 3, "PlayerBullet", { 1.0f,1.0f,0.0f,1.0f });
+		//new CBullet(mOwnerInterface, loc, dire, 60 * 3, "PlayerBullet", { 1.0f,1.0f,0.0f,1.0f });
 	new CMissile(mOwnerInterface, missilePos_R, dire, qua, 60, "PlayerBullet");
 	new CMissile(mOwnerInterface, missilePos_L, dire, qua, 60, "PlayerBullet");
 
@@ -170,51 +171,90 @@ void CTrialActor::Particle(CActor& actor)
 
 void CTrialActor::Rot(int dire)
 {
-	if (dire == 0)
+	if (!mTurn)
 	{
-		mRotFlag = true;
-		Transform.Rotation.AddAngleRelative({ 0,-1,0 });
-		if (mMeshRotZ < MAXROT)
+		if (dire == 2)
 		{
-			mMeshRotZ += 1.5;
-			mScene->Transform.Rotation.AddAngleRelative({ 0,0,1.5f });
+			Transform.Rotation.AddAngleRelative({ -1,0,0 });
+			return;
 		}
-	}
-	else if (dire == 0 && mTurn)
-	{
-
-	}
-	else if (dire == 1)
-	{
-		mRotFlag = true;
-		Transform.Rotation.AddAngleRelative({ 0,1,0 });
-		if (mMeshRotZ > -MAXROT)
+		else if (dire == 3)
 		{
-			mMeshRotZ -= 1.5;
-			mScene->Transform.Rotation.AddAngleRelative({ 0,0,-1.5f });
+			Transform.Rotation.AddAngleRelative({ 1,0,0 });
+			return;
 		}
-	}
-	else if (dire == 1 && mTurn)
-	{
 
-	}
-	else if (dire == 2)
-	{
-		Transform.Rotation.AddAngleRelative({ -1,0,0 });
-	}
-	else if (dire == 3)
-	{
-		Transform.Rotation.AddAngleRelative({ 1,0,0 });
+		mRotFlag = true;
+		if (mTurnLeft && dire == 0)
+		{
+			mTurn = true;
+		}
+		else if (mTurnRight && dire == 1)
+		{
+			mTurn = true;
+		}
+		else if (dire == 0)
+		{
+			Transform.Rotation.AddAngleRelative({ 0,-1,0 });
+			if (mMeshRotZ < MAXROT)
+			{
+				mMeshRotZ += 1.5;
+				mScene->Transform.Rotation.AddAngleRelative({ 0,0,1.5f });
+			}
+		}
+		else if (dire == 1)
+		{
+			Transform.Rotation.AddAngleRelative({ 0,1,0 });
+			if (mMeshRotZ > -MAXROT)
+			{
+				mMeshRotZ -= 1.5;
+				mScene->Transform.Rotation.AddAngleRelative({ 0,0,-1.5f });
+			}
+		}
 	}
 }
 
-void CTrialActor::Turning()
+void CTrialActor::Turning(int dire)
 {
-	mTurn = true;
+	if (dire == 0 && !mTurn)
+	{
+		mTurnLeft = true;
+		mTurnRight = false;
+	}
+	else if (dire == 1 && !mTurn)
+	{
+		mTurnRight = true;
+		mTurnLeft = false;
+	}
+	mDelayCount = 5;
 }
 
 void CTrialActor::Turn()
 {
+	XMFLOAT3 rightVc = Transform.GetRightVectorRelative();
+	mTurnGauge -= 3;
+	if (mTurnLeft)
+	{
+		mScene->Transform.Rotation.AddAngleRelative({ 0,0,-3 });
+		Transform.Location.x -= rightVc.x;
+		Transform.Location.y -= rightVc.y;
+		Transform.Location.z -= rightVc.z;
+	}
+	else if (mTurnRight)
+	{
+		mScene->Transform.Rotation.AddAngleRelative({ 0,0,3 });
+		Transform.Location.x += rightVc.x;
+		Transform.Location.y += rightVc.y;
+		Transform.Location.z += rightVc.z;
+	}
+	if (mTurnGauge <= 0)
+	{
+		mTurnGauge = 360.f;
+		mTurnLeft = false;
+		mTurnRight = false;
+		mTurn = false;
+	}
+
 
 }
 
@@ -273,7 +313,6 @@ void CTrialActor::Tick()
 	Move();
 	if (!mRotFlag)
 	{
-		mTurn = false;
 		if (mMeshRotZ > 0)
 		{
 			mMeshRotZ -= 1.5;
@@ -290,13 +329,24 @@ void CTrialActor::Tick()
 		{
 			//ControlUnit();
 		}
+
+		if (mDelayCount > 0 && (mTurnLeft || mTurnRight))
+		{
+			mDelayCount--;
+		}
+		else
+		{
+			mTurnLeft = false;
+			mTurnRight = false;
+		}
+		
 	}
 	else
 	{
 		if (mTurn)
 		{
-			mTurn = false;
-
+			Turn();
+			return;
 		}
 	}
 
